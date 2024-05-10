@@ -16,7 +16,7 @@ Our artifact repository includes:
   - Bias-Pair Ratio, Toxicity, and Regard on GenderPair benchmark
   - Results on StereoSet, Winoqueer, and BOLD after debiasing
 
-## Getting Started (~90 mins)
+## Getting Started
 
 ### Directory Structure
 
@@ -91,12 +91,12 @@ If you want to use other models, you can modify the `--model_path`, `--model_typ
 
 ##  Assess Gender Bias in LLMs
 
-### Perplexity Probability Difference on EEC (1 x NVIDIA A6000 48G, ~30 mins total)
+### Perplexity Probability Difference on EEC 
 
 Validates the claim that LLMs are more sensitive to meaning-preserving template modifications.
 
 1. Navigate to the `Code/EEC_Modify/` directory
-2. Run the evaluation script on Llama-2 13B (1 x A6000, ~30 mins):
+2. Run the evaluation script on Llama-2 13B:
    
 ```bash 
 CUDA_VISIBLE_DEVICES=0 deepspeed \
@@ -111,16 +111,16 @@ CUDA_VISIBLE_DEVICES=0 deepspeed \
 3. The script will generate `ppd_result_EEC_llama2_13b.csv` containing the perplexity probability differences between original and lightly modified prompts that preserve meaning but switch genders.
 
 
-### GenderPair Results on Original Models (2 x NVIDIA A6000 48G, ~159 hours total)
+### GenderPair Results on Original Models 
 
 Validates the gender bias in off-the-shelf LLMs using our GenderPair benchmark in terms of bias-pair ratio, toxicity, and regard.
 
-#### Step 1: Generate model responses (2 x A6000, ~156 hours total)
+#### Step 1: Generate model responses 
 
 1. Navigate to `Code/Assess_Gender_Bias/Our_Benchmark_GenderPair/`
 2. For each gender group, run the `assess.py` script to get model responses:
    
-- Group 1 (2 x A6000, ~48 hours):
+- Group 1:
 ```bash
 CUDA_VISIBLE_DEVICES=0,1 deepspeed \
   --master_port=60850 assess.py \
@@ -132,7 +132,7 @@ CUDA_VISIBLE_DEVICES=0,1 deepspeed \
   --max_new_tokens 512 &> ourbench_group1_responses.log  
 ```
 
-- Group 2 (2 x A6000, ~48 hours):
+- Group 2:
 ```bash
 CUDA_VISIBLE_DEVICES=0,1 deepspeed \
   --master_port=60850 assess.py \
@@ -144,7 +144,7 @@ CUDA_VISIBLE_DEVICES=0,1 deepspeed \
   --max_new_tokens 512 &> ourbench_group2_responses.log
 ```
 
-- Group 3 (2 x A6000, ~60 hours):  
+- Group 3:  
 ```bash
 CUDA_VISIBLE_DEVICES=0,1 deepspeed \
   --master_port=60850 assess.py \
@@ -156,13 +156,13 @@ CUDA_VISIBLE_DEVICES=0,1 deepspeed \
   --max_new_tokens 512 &> ourbench_group3_responses.log
 ```
 
-#### Step 2: Evaluate bias metrics (1 x A6000, ~3 hours total)
+#### Step 2: Evaluate bias metrics 
 
-1. Bias-Pair Ratio (1 x A6000, ~120 mins)
+1. Bias-Pair Ratio 
    
 For each group, run `evaluate_BPR.py`:
 
-- Group 1 (~30 mins): 
+- Group 1: 
 ```bash
 CUDA_VISIBLE_DEVICES=1 deepspeed \
   --master_port=60850 evaluate_BPR.py \
@@ -173,7 +173,7 @@ CUDA_VISIBLE_DEVICES=1 deepspeed \
   --zero_stage 3 &> group1_BPR.log
 ```
 
-- Group 2 (~30 mins):
+- Group 2:
 ```bash 
 CUDA_VISIBLE_DEVICES=1 deepspeed \
   --master_port=60850 evaluate_BPR.py \
@@ -184,7 +184,7 @@ CUDA_VISIBLE_DEVICES=1 deepspeed \
   --zero_stage 3 &> group2_BPR.log
 ```
 
-- Group 3 (~60 mins):
+- Group 3:
 ```bash
 CUDA_VISIBLE_DEVICES=1 deepspeed \
   --master_port=60850 evaluate_BPR.py \
@@ -197,42 +197,42 @@ CUDA_VISIBLE_DEVICES=1 deepspeed \
 
 This will generate `group{1,2,3}_BPR_log.txt` with detailed bias-pair ratios per response and `group{1,2,3}_BPR_ratio.json` with the overall ratios.
 
-2. Toxicity (1 x A6000, ~60 mins )
+2. Toxicity 
 
 For each group, run `evaluate_toxicity.py`:
 
-- Group 1 (~15 mins):
+- Group 1:
 ```bash
 python evaluate_toxicity.py ourbench_group1_responses.json ourbench_group1_toxicity.log
 ```
 
-- Group 2 (~20 mins): 
+- Group 2: 
 ```bash
 python evaluate_toxicity.py ourbench_group2_responses.json ourbench_group2_toxicity.log
 ```
 
-- Group 3 (~25 mins):
+- Group 3:
 ```bash 
 python evaluate_toxicity.py ourbench_group3_responses.json ourbench_group3_toxicity.log
 ```
 
 This will generate `ourbench_group{1,2,3}_toxicity.log` with average and maximum toxicity scores.
 
-3. Regard (1 x A6000, ~30 mins)
+3. Regard
 
 For each group, run `evaluate_regard.py`:
 
-- Group 1 (~10 mins):
+- Group 1:
 ```bash
 python evaluate_regard.py ourbench_group1_responses.json ourbench_group1_regard.log  
 ```
 
-- Group 2 (~10 mins):
+- Group 2:
 ```bash
 python evaluate_regard.py ourbench_group2_responses.json ourbench_group2_regard.log
 ```
 
-- Group 3 (~10 mins):  
+- Group 3:  
 ```bash
 python evaluate_regard.py ourbench_group3_responses.json ourbench_group3_regard.log
 ```
@@ -241,12 +241,12 @@ This will generate `ourbench_group{1,2,3}_regard.log` with average regard scores
 
 ##  Reduce Gender Bias in LLMs
 
-### Debiasing with Our Proposed Strategy (2 x NVIDIA A6000 48G, ~24 hours total)
+### Debiasing with Our Proposed Strategy 
 
 Fine-tune the Llama2 model on our debiasing dataset to reduce gender bias. 
 
 1. Navigate to `Code/Reduce_Gender_Bias/Our_Debiasing_Strategy/`
-2. Run the debiasing script (2 x A6000, ~24 hours):
+2. Run the debiasing script:
    
 ```bash
 bash run_llama2_13b_debiasing.sh
@@ -254,21 +254,21 @@ bash run_llama2_13b_debiasing.sh
 
 This will generate a debiased version of Llama2-13B in `Models/ft_models/llama2_debiasing/`. 
 
-### GenderPair Results on Debiased Models  (2 x NVIDIA A6000 48G, ~159 hours total) 
+### GenderPair Results on Debiased Models 
 
 Same steps as assessment, but using the debiased model checkpoints in `Models/ft_models/` to validate bias reduction. Concretely:
 
-1. Generate model responses (2 x A6000, ~156 hours total)
+1. Generate model responses
    - Use `../../../Models/ft_models/llama2_debiasing` as the `--model_name_or_path_baseline`
 
-2. Evaluate bias metrics (same as Table 3, 1 x A6000, ~3 hours total)
+2. Evaluate bias metrics 
    - Use `../../../Models/ft_models/llama2_debiasing` as the `--model_path`
 
-### Other Bias Benchmark Results on Debiased Models (1 x NVIDIA A6000 48G, ~9.4 hours total)
+### Other Bias Benchmark Results on Debiased Models
 
 Validates bias reduction on the StereoSet, Winoqueer, and BOLD benchmarks. 
 
-#### StereoSet (1 x A6000, ~20 mins)
+#### StereoSet
 
 1. Navigate to `Code/Assess_Gender_Bias/StereoSet/`
 2. Run the evaluation script:
@@ -285,7 +285,7 @@ CUDA_VISIBLE_DEVICES=1 deepspeed \
 
 This will generate `finetuned_results.csv` containing the probability distributions over the three options (Stereo_More, Stereo_Less, Unrelated) and the $\Delta$ (difference between Stereo_More and Stereo_Less probability).
 
-#### Winoqueer (1 x A6000, ~50 mins)
+#### Winoqueer 
 
 1. Navigate to `Code/Assess_Gender_Bias/Winoqueer/` 
 2. Run the evaluation script:
@@ -302,13 +302,13 @@ CUDA_VISIBLE_DEVICES=1 deepspeed \
 
 This will generate `finetuned_results.csv` with the probability distributions over the two options (Stereo_More, Stereo_Less) and the $\Delta$ (difference between Stereo_More and Stereo_Less probability).
 
-#### BOLD (2 x A6000, ~8.2 hours)
+#### BOLD
 
 1. Navigate to `Code/Assess_Gender_Bias/BOLD/`
    
 2. Generate model responses for each gender group:
    
-- Actress group (2 x A6000, ~4 hours):
+- Actress group:
 ```bash 
 CUDA_VISIBLE_DEVICES=0,1 deepspeed \
   --local_rank -1 \
@@ -321,7 +321,7 @@ CUDA_VISIBLE_DEVICES=0,1 deepspeed \
   --max_new_tokens 128 &> get_bold_actresses_responses.log
 ```
 
-- Actor group (2 x A6000, ~4 hours):  
+- Actor group:  
 ```bash
 CUDA_VISIBLE_DEVICES=0,1 deepspeed \
   --local_rank -1 \
@@ -334,7 +334,7 @@ CUDA_VISIBLE_DEVICES=0,1 deepspeed \
   --max_new_tokens 128 &> get_bold_actors_responses.log
 ```
 
-3. Evaluate regard scores (1 x A6000, ~10 mins):
+3. Evaluate regard scores:
    
 ```bash
 python -u evaluate_regard.py \
