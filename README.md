@@ -1,5 +1,4 @@
 # GenderCARE
-[[Manuscript](https://zjzac.github.io/publications/pdf/CCS_24_bias.pdf)]
 
 This official repository contains the source code, datasets, and scripts for the paper "*GenderCARE: A Comprehensive Framework for Assessing and Reducing Gender Bias in Large Language Models*," accepted by [ACM CCS 2024](https://www.sigsac.org/ccs/CCS2024/home.html) (camera-ready version under preparation), authored by Kunsheng Tang, Wenbo Zhou, and Jie Zhang et al. 
 
