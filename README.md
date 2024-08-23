@@ -1,6 +1,6 @@
 # GenderCARE
 
-This official repository contains the source code, datasets, and scripts for the paper "*GenderCARE: A Comprehensive Framework for Assessing and Reducing Gender Bias in Large Language Models*," accepted by [ACM CCS 2024](https://www.sigsac.org/ccs/CCS2024/home.html) (camera-ready version under preparation), authored by Kunsheng Tang, Wenbo Zhou, and Jie Zhang et al. 
+This official repository contains the source code, datasets, and scripts for the paper "*[GenderCARE: A Comprehensive Framework for Assessing and Reducing Gender Bias in Large Language Models](https://arxiv.org/pdf/2408.12494)*," accepted by [ACM CCS 2024](https://www.sigsac.org/ccs/CCS2024/home.html), authored by Kunsheng Tang, Wenbo Zhou, and Jie Zhang et al. 
 
 In this paper, we introduce Gender**CARE**, a comprehensive framework that provides innovative **C**riteria, **A**ssessment methods, **R**eduction techniques, and **E**valuation metrics for quantifying and mitigating gender bias in large language models (LLMs). Our approach aims to offer a realistic assessment and reduction of gender biases, hoping to make a significant step towards achieving fairness and equity in LLMs.
 
