@@ -73,8 +73,7 @@ In this repository, we use Llama2-13B model as an example to reproduce the main 
 Regardless of which method you choose, you need to place the pre-trained model in the `Models/base_models` directory and rename the root directory of the pre-trained model to `Meta-Llama-2-13b-chat-hf` to ensure a smooth click-to-run experience.
 
 
-If you want to use other models, you can modify the `--model_path`, `--model_type`, and other parameters in the scripts below. For more information, please refer to the **Reusability** section.
-
+If you want to use other models, you can modify the `--model_path`, `--model_type`, and other parameters in the scripts below. 
 ### Pre-trained Toxicity and Regard Models Download
 
 1. Toxicity
