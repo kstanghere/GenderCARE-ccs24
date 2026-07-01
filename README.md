@@ -74,6 +74,7 @@ Regardless of which method you choose, you need to place the pre-trained model i
 
 
 If you want to use other models, you can modify the `--model_path`, `--model_type`, and other parameters in the scripts below. 
+
 ### Pre-trained Toxicity and Regard Models Download
 
 1. Toxicity
@@ -85,6 +86,9 @@ If you want to use other models, you can modify the `--model_path`, `--model_typ
    
    Navigate to the `Models/regard/sasha` directory and execute the command: `git clone https://huggingface.co/sasha/regardv3`
 
+### GenderPair Dataset Download
+
+The GenderPair dataset is already included in this GitHub repository. You can also download it from 🤗[Hugging Face](https://huggingface.co/datasets/Warddamn2/GenderPair).
 
 
 ##  Assess Gender Bias in LLMs
